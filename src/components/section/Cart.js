@@ -1,38 +1,17 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
 import { DataContext } from "../Context"
 import { Link } from "react-router-dom";
 import Size from "./Size";
 import "../css/Details.css"
-
-export class Details extends Component {
+export class Cart extends Component {
     static contextType = DataContext;
-    state = {
-        product: []
-    }
-
-    getProduct = () => {
-        if (this.props.match.params.id) {
-            const res = this.context.products;
-            const data = res.filter(item => {
-                return item._id === this.props.match.params.id
-            })
-            this.setState({ product: data })
-        }
-    };
-
-    componentDidMount() {
-        this.getProduct();
-    }
-
-
 
     render() {
-        const { product } = this.state;
-        const { addCart } = this.context;
+        const { cart } = this.context;
         return (
             <>
                 {
-                    product.map(item => (
+                    cart.map(item => (
                         <div className="details" key={item._id}>
                             <img src={item.src} alt="" />
                             <div className="box">
@@ -43,7 +22,7 @@ export class Details extends Component {
                                 <Size size={item.size} />
                                 <p>{item.description}</p>
                                 <p>{item.content}</p>
-                                <Link to="/cart" className="cart" onClick={() => addCart(item._id)}>
+                                <Link to="/cart" className="cart" >
                                     Add to cart
                                 </Link>
                             </div>
@@ -55,4 +34,4 @@ export class Details extends Component {
     }
 }
 
-export default Details
+export default Cart
