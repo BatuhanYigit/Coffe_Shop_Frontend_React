@@ -78,6 +78,21 @@ export class DataProvider extends Component {
 
     };
 
+
+
+    payment() {
+        const dataCart = JSON.parse(localStorage.getItem('dataCart'))
+        fetch("http://localhost:8000/payment", {
+            method: 'POST',
+            body: JSON.stringify(dataCart[0]),
+            headers: {
+                "Content-Type": 'application/json',
+                "Accept": 'application/json'
+            }
+        })
+        console.log("deneme =======", dataCart[0])
+    }
+
     addCart = (id) => {
         const { products, cart } = this.state;
         const check = cart.every(item => {
@@ -95,6 +110,8 @@ export class DataProvider extends Component {
             return product._id === id
         })
         this.setState({ cart: [...cart, ...data] })
+        this.getTotal();
+        console.log('dataCart', JSON.stringify(this.state.cart))
     };
 
     reduction = id => {
@@ -105,6 +122,7 @@ export class DataProvider extends Component {
             }
         })
         this.setState({ cart: cart });
+        this.getTotal();
     };
     increase = id => {
         const { cart } = this.state;
@@ -114,6 +132,7 @@ export class DataProvider extends Component {
             }
         })
         this.setState({ cart: cart });
+        this.getTotal();
     };
 
     removeProduct = id => {
@@ -158,9 +177,9 @@ export class DataProvider extends Component {
 
     render() {
         const { products, cart, total } = this.state;
-        const { addCart, reduction, increase, removeProduct, getTotal } = this;
+        const { addCart, reduction, increase, removeProduct, getTotal, payment } = this;
         return (
-            <DataContext.Provider value={{ products, addCart, cart, reduction, increase, removeProduct, total, getTotal }}>
+            <DataContext.Provider value={{ products, addCart, cart, reduction, increase, removeProduct, total, getTotal, payment }}>
                 {this.props.children}
             </DataContext.Provider>
         )

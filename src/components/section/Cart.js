@@ -12,7 +12,7 @@ export class Cart extends Component {
     }
 
     render() {
-        const { cart, increase, reduction, removeProduct, total } = this.context;
+        const { cart, increase, reduction, removeProduct, total, payment } = this.context;
         if (cart.length === 0) {
             return <h2 style={{ textAlign: "center" }}>Sepet Boş</h2>
 
@@ -43,7 +43,7 @@ export class Cart extends Component {
                     ))
                 }
                 <div className="total">
-                    <Link to="/payment">Payment</Link>
+                    <Link to="/payment" onClick={() => payment(cart)} >Payment</Link>
                     <h3>Total: ${total}</h3>
                 </div>
             </>
