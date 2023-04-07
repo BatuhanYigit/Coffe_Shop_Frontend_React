@@ -5,7 +5,10 @@ export const DataContext = React.createContext();
 export class DataProvider extends Component {
 
 
+
     state = {
+
+
         products: [
             {
                 "_id": "1",
@@ -78,6 +81,10 @@ export class DataProvider extends Component {
 
     };
 
+    getproducts_test() {
+        const data = fetch("http://localhost:8000/products")
+        console.log(data)
+    }
 
 
     payment() {
@@ -133,6 +140,7 @@ export class DataProvider extends Component {
         })
         this.setState({ cart: cart });
         this.getTotal();
+        console.log(this.getproducts_test())
     };
 
     removeProduct = id => {

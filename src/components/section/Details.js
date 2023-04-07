@@ -27,6 +27,7 @@ export class Details extends Component {
 
 
     render() {
+        
         const { product } = this.state;
         const { addCart } = this.context;
         return (
