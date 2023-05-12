@@ -82,8 +82,8 @@ export class DataProvider extends Component {
     };
 
     getproducts_test() {
-        const data = fetch("http://localhost:8000/products")
-        console.log(data)
+        const data = fetch("http://localhost:8000/item")
+
     }
 
 
@@ -103,18 +103,18 @@ export class DataProvider extends Component {
     addCart = (id) => {
         const { products, cart } = this.state;
         const check = cart.every(item => {
-            return item._id !== id;
+            return item.id !== id;
         })
         if (check) {
             const data = products.filter(product => {
-                return product._id === id
+                return product.id === id
             })
             this.setState({ cart: [...cart, ...data] })
         } else {
             alert("The product has been added to cart.")
         }
         const data = products.filter(product => {
-            return product._id === id
+            return product.id === id
         })
         this.setState({ cart: [...cart, ...data] })
         this.getTotal();
@@ -172,6 +172,8 @@ export class DataProvider extends Component {
     }
 
     componentDidMount() {
+
+
         const dataCart = JSON.parse(localStorage.getItem('dataCart'))
         if (dataCart !== null) {
             this.setState({ cart: dataCart });
