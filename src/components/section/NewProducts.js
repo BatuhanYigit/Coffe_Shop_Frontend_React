@@ -3,12 +3,13 @@ import Product from './Product'
 import { DataContext } from '../Context'
 const NewProducts = () => {
     const cartContext = useContext(DataContext)
-    const [products, setProducts] = useState()
-
     const fetchPRoductsData = async () => {
         const response = await fetch("http://localhost:8000/item")
         const data = await response.json()
-        setProducts(data)
+        cartContext.set_products(data.data)
+
+
+
     }
 
     useEffect(() => {
@@ -18,8 +19,8 @@ const NewProducts = () => {
     return (
         <div id="product">
             {
-                products?.data?.map(product => (
-                    <Product key={product.name} name={product.item_name} price={product.item_price} image={product.item_code} addtocart={() => cartContext?.addCart(product.id)} />
+                cartContext.products?.map(product => (
+                    <Product key={product.id} product={product} />
                     // <div className="card" key={product._id}>
                     //     <Link to={`/product/${product._id}`}>
                     //         <img src={product.src} alt="" />

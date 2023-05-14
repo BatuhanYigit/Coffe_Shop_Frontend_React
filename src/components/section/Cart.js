@@ -22,23 +22,23 @@ export class Cart extends Component {
                 {
                     cart.map(item => (
                         <div className="details" key={item.id}>
-                            <img src={item.src} alt="" />
+                            <img src={item.item_code} alt="" />
                             <div className="box">
                                 <div className="row">
-                                    <h2>{item.title}</h2>
-                                    <span>${item.price * item.count}</span>
+                                    <h2>{item.item_name}</h2>
+                                    <span>${item.item_price * item.count}</span>
                                 </div>
                                 <Size size={item.size} />
                                 <p>{item.description}</p>
                                 <p>{item.content}</p>
                                 <div className="amount">
-                                    <button className="count" onClick={() => reduction(item._id)}> - </button>
+                                    <button className="count" onClick={() => reduction(item.id)}> - </button>
                                     <span>{item.count}</span>
-                                    <button className="count" onClick={() => increase(item._id)}> + </button>
+                                    <button className="count" onClick={() => increase(item.id)}> + </button>
 
                                 </div>
                             </div>
-                            <div className="delete" onClick={() => removeProduct(item._id)}>X</div>
+                            <div className="delete" onClick={() => removeProduct(item.id)}>X</div>
                         </div>
                     ))
                 }

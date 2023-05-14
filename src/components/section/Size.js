@@ -6,7 +6,7 @@ export class Size extends Component {
         return (
             <div className="size">
                 {
-                    size.map((size, index) => (
+                    size?.map((size, index) => (
                         <button key={index} >{size}</button>
                     ))
                 }

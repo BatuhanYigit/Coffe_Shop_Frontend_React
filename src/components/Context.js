@@ -7,82 +7,22 @@ export class DataProvider extends Component {
 
 
     state = {
-
-
-        products: [
-            {
-                "_id": "1",
-                "title": "Americano",
-                "src": "https://cdn.getiryemek.com/products/1610832197239_500x375.jpeg",
-                "price": 16,
-                "size": ["Küçük", "Orta", "Büyük"],
-                "sugar": ["Şeker İstemiyorum", "Beyaz Şeker", "Esmer Şeker"],
-                "syrup": ["Vanilya", "Karamel", "Fındık"],
-                "count": 1
-
-            },
-            {
-                "_id": "2",
-                "title": "Classic Hot Chocolate",
-                "src": "https://cdn.getiryemek.com/products/1602707770308_500x375.jpeg",
-                "price": 32,
-                "size": ["Küçük", "Orta", "Büyük"],
-                "sugar": ["Şeker İstemiyorum", "Beyaz Şeker", "Esmer Şeker"],
-                "syrup": ["Vanilya", "Karamel", "Fındık"],
-                "count": 1
-
-            },
-            {
-                "_id": "3",
-                "title": "Caffe Misto",
-                "src": "https://cdn.getiryemek.com/products/1602707857660_500x375.jpeg",
-                "price": 24,
-                "size": ["Küçük", "Orta", "Büyük"],
-                "sugar": ["Şeker İstemiyorum", "Beyaz Şeker", "Esmer Şeker"],
-                "syrup": ["Vanilya", "Karamel", "Fındık"],
-                "count": 1
-
-            },
-            {
-                "_id": "4",
-                "title": "Iced White Chocolate Mocha",
-                "src": "https://cdn.getiryemek.com/products/1602495560781_500x375.jpeg",
-                "price": 16,
-                "size": ["Küçük", "Orta", "Büyük"],
-                "sugar": ["Şeker İstemiyorum", "Beyaz Şeker", "Esmer Şeker"],
-                "syrup": ["Vanilya", "Karamel", "Fındık"],
-                "count": 1
-
-            },
-            {
-                "_id": "5",
-                "title": "Fresh Filter Coffee",
-                "src": "https://cdn.getiryemek.com/products/1602500171326_500x375.jpeg",
-                "price": 30,
-                "size": ["Küçük", "Orta", "Büyük"],
-                "sugar": ["Şeker İstemiyorum", "Beyaz Şeker", "Esmer Şeker"],
-                "syrup": ["Vanilya", "Karamel", "Fındık"],
-                "count": 1
-
-            },
-            {
-                "_id": "6",
-                "title": "Berry Hibiscus Refresha",
-                "src": "https://cdn.getiryemek.com/products/1620282769779_500x375.jpeg",
-                "price": 45,
-                "size": ["Küçük", "Orta", "Büyük"],
-                "sugar": ["Şeker İstemiyorum", "Beyaz Şeker", "Esmer Şeker"],
-                "syrup": ["Vanilya", "Karamel", "Fındık"],
-                "count": 1
-
-            }
-        ],
+        products: [],
         cart: []
 
     };
 
+
     getproducts_test() {
         const data = fetch("http://localhost:8000/item")
+
+
+    }
+
+    set_products = (data) => {
+        console.log("context ", data)
+
+        this.setState({ products: data })
 
     }
 
@@ -101,6 +41,7 @@ export class DataProvider extends Component {
     }
 
     addCart = (id) => {
+        console.log("test", id)
         const { products, cart } = this.state;
         const check = cart.every(item => {
             return item.id !== id;
@@ -124,7 +65,7 @@ export class DataProvider extends Component {
     reduction = id => {
         const { cart } = this.state;
         cart.forEach(item => {
-            if (item._id === id) {
+            if (item.id === id) {
                 item.count === 1 ? item.count = 1 : item.count -= 1;
             }
         })
@@ -134,7 +75,7 @@ export class DataProvider extends Component {
     increase = id => {
         const { cart } = this.state;
         cart.forEach(item => {
-            if (item._id === id) {
+            if (item.id === id) {
                 item.count += 1;
             }
         })
@@ -147,7 +88,7 @@ export class DataProvider extends Component {
         if (window.confirm("Ürünü Silmek İstiyor musunuz?")) {
             const { cart } = this.state;
             cart.forEach((item, index) => {
-                if (item._id === id) {
+                if (item.id === id) {
                     cart.splice(index, 1)
                 }
             })
@@ -161,7 +102,7 @@ export class DataProvider extends Component {
     getTotal = () => {
         const { cart } = this.state;
         const res = cart.reduce((prev, item) => {
-            return prev + (item.price * item.count);
+            return prev + (item.item_price * item.count);
         }, 0)
         this.setState({ total: res })
     };
@@ -178,18 +119,18 @@ export class DataProvider extends Component {
         if (dataCart !== null) {
             this.setState({ cart: dataCart });
         }
-        const dataTotal = JSON.parse(localStorage.getItem('dataTotal'))
-        if (dataTotal !== null) {
-            this.setState({ total: dataTotal });
-        }
+        // const dataTotal = JSON.parse(localStorage.getItem('dataTotal'))
+        // if (dataTotal !== null) {
+        //     this.setState({ total: dataTotal });
+        // }
 
     }
 
     render() {
         const { products, cart, total } = this.state;
-        const { addCart, reduction, increase, removeProduct, getTotal, payment } = this;
+        const { addCart, reduction, increase, removeProduct, getTotal, payment, set_products } = this;
         return (
-            <DataContext.Provider value={{ products, addCart, cart, reduction, increase, removeProduct, total, getTotal, payment }}>
+            <DataContext.Provider value={{ products, addCart, cart, reduction, increase, removeProduct, total, getTotal, payment, set_products }}>
                 {this.props.children}
             </DataContext.Provider>
         )

@@ -27,15 +27,15 @@ export class Details extends Component {
 
 
     render() {
-        
+
         const { product } = this.state;
         const { addCart } = this.context;
         return (
             <>
                 {
                     product.map(item => (
-                        <div className="details" key={item._id}>
-                            <img src={item.src} alt="" />
+                        <div className="details" key={item.id}>
+                            <img src={item.item_code} alt="" />
                             <div className="box">
                                 <div className="row">
                                     <h2>{item.title}</h2>
