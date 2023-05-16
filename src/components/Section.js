@@ -22,3 +22,4 @@ export class Section extends Component {
 }
 
 export default Section
+

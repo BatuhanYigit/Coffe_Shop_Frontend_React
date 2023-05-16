@@ -7,12 +7,14 @@ import "../css/Cart.css"
 export class Cart extends Component {
     static contextType = DataContext;
 
+
+
     componentDidMount() {
         this.context.getTotal();
     }
 
     render() {
-        const { cart, increase, reduction, removeProduct, total, payment } = this.context;
+        const { cart, increase, reduction, removeProduct, total, payment, syrup } = this.context;
         if (cart.length === 0) {
             return <h2 style={{ textAlign: "center" }}>Sepet Boş</h2>
 
@@ -32,6 +34,7 @@ export class Cart extends Component {
                                 <p>{item.description}</p>
                                 <p>{item.content}</p>
                                 <div className="amount">
+
                                     <button className="count" onClick={() => reduction(item.id)}> - </button>
                                     <span>{item.count}</span>
                                     <button className="count" onClick={() => increase(item.id)}> + </button>

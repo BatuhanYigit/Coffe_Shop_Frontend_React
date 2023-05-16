@@ -8,6 +8,9 @@ export class DataProvider extends Component {
 
     state = {
         products: [],
+        sugar: [],
+        size: [],
+        syrup: [],
         cart: []
 
     };
@@ -26,6 +29,21 @@ export class DataProvider extends Component {
 
     }
 
+    set_syrups = (syrup_data) => {
+        console.log("syrup", syrup_data)
+
+        this.setState({ syrup: syrup_data })
+    }
+
+    set_sugar = (sugar_data) => {
+        console.log("sugar", sugar_data)
+        this.setState({ sugar: sugar_data })
+    }
+    set_size = (size_data) => {
+        console.log("size", size_data)
+        this.setState({ size: size_data })
+    }
+
 
     payment() {
         const dataCart = JSON.parse(localStorage.getItem('dataCart'))
@@ -42,7 +60,7 @@ export class DataProvider extends Component {
 
     addCart = (id) => {
         console.log("test", id)
-        const { products, cart } = this.state;
+        const { products, cart, syrup } = this.state;
         const check = cart.every(item => {
             return item.id !== id;
         })
@@ -127,10 +145,10 @@ export class DataProvider extends Component {
     }
 
     render() {
-        const { products, cart, total } = this.state;
-        const { addCart, reduction, increase, removeProduct, getTotal, payment, set_products } = this;
+        const { products, cart, total, syrup, size, sugar } = this.state;
+        const { addCart, reduction, increase, removeProduct, getTotal, payment, set_products, set_syrups, set_size, set_sugar } = this;
         return (
-            <DataContext.Provider value={{ products, addCart, cart, reduction, increase, removeProduct, total, getTotal, payment, set_products }}>
+            <DataContext.Provider value={{ products, addCart, cart, reduction, increase, removeProduct, total, getTotal, payment, set_products, set_syrups, syrup, set_size, size, set_sugar, sugar }}>
                 {this.props.children}
             </DataContext.Provider>
         )
