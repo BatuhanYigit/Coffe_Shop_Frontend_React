@@ -23,24 +23,20 @@ export class DataProvider extends Component {
     }
 
     set_products = (data) => {
-        console.log("context ", data)
 
         this.setState({ products: data })
 
     }
 
     set_syrups = (syrup_data) => {
-        console.log("syrup", syrup_data)
 
         this.setState({ syrup: syrup_data })
     }
 
     set_sugar = (sugar_data) => {
-        console.log("sugar", sugar_data)
         this.setState({ sugar: sugar_data })
     }
     set_size = (size_data) => {
-        console.log("size", size_data)
         this.setState({ size: size_data })
     }
 
@@ -55,12 +51,10 @@ export class DataProvider extends Component {
                 "Accept": 'application/json'
             }
         })
-        console.log("deneme =======", dataCart[0])
     }
 
-    addCart = (id) => {
-        console.log("test", id)
-        const { products, cart, syrup } = this.state;
+    addCart = (id, size, syrup, sugar) => {
+        const { products, cart } = this.state;
         const check = cart.every(item => {
             return item.id !== id;
         })
@@ -68,16 +62,15 @@ export class DataProvider extends Component {
             const data = products.filter(product => {
                 return product.id === id
             })
+            data[0]['syrup'] = Number(syrup)
+            data[0]['size'] = Number(size)
+            data[0]['sugar'] = Number(sugar)
             this.setState({ cart: [...cart, ...data] })
         } else {
             alert("The product has been added to cart.")
         }
-        const data = products.filter(product => {
-            return product.id === id
-        })
-        this.setState({ cart: [...cart, ...data] })
+
         this.getTotal();
-        console.log('dataCart', JSON.stringify(this.state.cart))
     };
 
     reduction = id => {
@@ -99,7 +92,6 @@ export class DataProvider extends Component {
         })
         this.setState({ cart: cart });
         this.getTotal();
-        console.log(this.getproducts_test())
     };
 
     removeProduct = id => {

@@ -3,7 +3,6 @@ import Product from './Product'
 import { DataContext } from '../Context'
 const NewProducts = () => {
     const cartContext = useContext(DataContext)
-    console.log("cart_context", cartContext)
     const fetchPRoductsData = async () => {
         const response = await fetch("http://localhost:8000/item")
         const data = await response.json()

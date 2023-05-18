@@ -14,7 +14,7 @@ export class Cart extends Component {
     }
 
     render() {
-        const { cart, increase, reduction, removeProduct, total, payment, syrup } = this.context;
+        const { cart, increase, reduction, removeProduct, total, payment, syrup, sugar, size } = this.context;
         if (cart.length === 0) {
             return <h2 style={{ textAlign: "center" }}>Sepet Boş</h2>
 
@@ -22,23 +22,25 @@ export class Cart extends Component {
         return (
             <>
                 {
+
                     cart.map(item => (
                         <div className="details" key={item.id}>
                             <img src={item.item_code} alt="" />
                             <div className="box">
                                 <div className="row">
                                     <h2>{item.item_name}</h2>
+                                    <p>Size : {size.find(ss => ss.id == item.size)?.size}</p>
+                                    <p>Syrup : {syrup.find(sy => sy.id == item.syrup)?.syrup_type}</p>
+                                    <p>Sugar : {sugar.find(sg => sg.id == item.sugar)?.sugar_type}</p>
                                     <span>${item.item_price * item.count}</span>
                                 </div>
-                                <Size size={item.size} />
-                                <p>{item.description}</p>
-                                <p>{item.content}</p>
+
                                 <div className="amount">
 
                                     <button className="count" onClick={() => reduction(item.id)}> - </button>
                                     <span>{item.count}</span>
                                     <button className="count" onClick={() => increase(item.id)}> + </button>
-
+                                    {console.log(item)}
                                 </div>
                             </div>
                             <div className="delete" onClick={() => removeProduct(item.id)}>X</div>
