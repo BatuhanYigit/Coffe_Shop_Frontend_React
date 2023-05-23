@@ -3,8 +3,9 @@ import Products from './section/Products'
 import Details from './section/Details'
 import { Route } from "react-router-dom"
 import Cart from './section/Cart'
-import { Payment } from './section/Payment'
+// import { Payment } from './section/Payment'
 import NewProducts from './section/NewProducts'
+import Payment from './section/Payment'
 
 
 export class Section extends Component {

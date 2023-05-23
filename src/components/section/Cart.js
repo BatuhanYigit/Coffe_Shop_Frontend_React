@@ -32,7 +32,7 @@ export class Cart extends Component {
                                     <p>Size : {size.find(ss => ss.id == item.size)?.size}</p>
                                     <p>Syrup : {syrup.find(sy => sy.id == item.syrup)?.syrup_type}</p>
                                     <p>Sugar : {sugar.find(sg => sg.id == item.sugar)?.sugar_type}</p>
-                                    <span>${item.item_price * item.count}</span>
+                                    <span>${(item.item_price + syrup.find(ss => ss.id == item.syrup)?.syrup_price + size.find(sz => sz.id == item.size)?.size_price + sugar.find(sg => sg.id == item.sugar)?.sugar_price) * item.count}</span>
                                 </div>
 
                                 <div className="amount">
@@ -48,7 +48,7 @@ export class Cart extends Component {
                     ))
                 }
                 <div className="total">
-                    <Link to="/payment" onClick={() => payment(cart)} >Payment</Link>
+                    <Link to="/payment">Payment</Link>
                     <h3>Total: ${total}</h3>
                 </div>
             </>

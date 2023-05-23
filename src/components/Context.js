@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { v4 } from "uuid"
+
 export const DataContext = React.createContext();
 
 export class DataProvider extends Component {
@@ -14,6 +16,9 @@ export class DataProvider extends Component {
         cart: []
 
     };
+
+
+
 
 
     getproducts_test() {
@@ -41,15 +46,19 @@ export class DataProvider extends Component {
     }
 
 
-    payment() {
+    payment({ name, surname, address_name, email, phone, address_detail }) {
         const dataCart = JSON.parse(localStorage.getItem('dataCart'))
-        fetch("http://localhost:8000/payment", {
+        const address_data = { name: name, surname: surname, address_name: address_name, email: email, phone: phone, address_detail: address_detail }
+        const basketId = v4()
+
+
+        fetch(`http://localhost:8000/json-test/${basketId}`, {
             method: 'POST',
-            body: JSON.stringify(dataCart[0]),
+            body: JSON.stringify({ dataCart, address_detail: { name, surname, address_name, email, phone, address_detail } }),
             headers: {
                 "Content-Type": 'application/json',
                 "Accept": 'application/json'
-            }
+            },
         })
     }
 
@@ -110,12 +119,17 @@ export class DataProvider extends Component {
     }
 
     getTotal = () => {
-        const { cart } = this.state;
+        const { cart, syrup, sugar, size } = this.state;
         const res = cart.reduce((prev, item) => {
-            return prev + (item.item_price * item.count);
+            return prev + ((item.item_price + syrup.find(ss => ss.id == item.syrup)?.syrup_price + size.find(sz => sz.id == item.size)?.size_price + sugar.find(sg => sg.id == item.sugar)?.sugar_price) * item.count);
         }, 0)
         this.setState({ total: res })
     };
+
+    randomBasketId = () => {
+        const baksetid = Math.floor(Math.random() * 99999)
+        console.log(baksetid)
+    }
 
     componentDidUpdate() {
         localStorage.setItem('dataCart', JSON.stringify(this.state.cart))
@@ -129,18 +143,14 @@ export class DataProvider extends Component {
         if (dataCart !== null) {
             this.setState({ cart: dataCart });
         }
-        // const dataTotal = JSON.parse(localStorage.getItem('dataTotal'))
-        // if (dataTotal !== null) {
-        //     this.setState({ total: dataTotal });
-        // }
 
     }
 
     render() {
         const { products, cart, total, syrup, size, sugar } = this.state;
-        const { addCart, reduction, increase, removeProduct, getTotal, payment, set_products, set_syrups, set_size, set_sugar } = this;
+        const { addCart, reduction, increase, removeProduct, getTotal, payment, set_products, set_syrups, set_size, set_sugar, randomBasketId } = this;
         return (
-            <DataContext.Provider value={{ products, addCart, cart, reduction, increase, removeProduct, total, getTotal, payment, set_products, set_syrups, syrup, set_size, size, set_sugar, sugar }}>
+            <DataContext.Provider value={{ products, addCart, cart, reduction, increase, removeProduct, total, getTotal, payment, set_products, set_syrups, syrup, set_size, size, set_sugar, randomBasketId, sugar }}>
                 {this.props.children}
             </DataContext.Provider>
         )
