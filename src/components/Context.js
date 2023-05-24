@@ -17,7 +17,16 @@ export class DataProvider extends Component {
 
     };
 
+    resetState = () => {
+        this.setState({
+            products: [],
+            sugar: [],
+            size: [],
+            syrup: [],
+            cart: []
 
+        })
+    }
 
 
 
@@ -52,7 +61,7 @@ export class DataProvider extends Component {
         const basketId = v4()
 
 
-        fetch(`http://localhost:8000/json-test/${basketId}`, {
+        fetch(`http://localhost:8000/payment/${basketId}`, {
             method: 'POST',
             body: JSON.stringify({ dataCart, address_detail: { name, surname, address_name, email, phone, address_detail } }),
             headers: {
@@ -118,6 +127,10 @@ export class DataProvider extends Component {
 
     }
 
+    clearCart = () => {
+        localStorage.clear();
+    }
+
     getTotal = () => {
         const { cart, syrup, sugar, size } = this.state;
         const res = cart.reduce((prev, item) => {
@@ -128,7 +141,6 @@ export class DataProvider extends Component {
 
     randomBasketId = () => {
         const baksetid = Math.floor(Math.random() * 99999)
-        console.log(baksetid)
     }
 
     componentDidUpdate() {
@@ -148,9 +160,9 @@ export class DataProvider extends Component {
 
     render() {
         const { products, cart, total, syrup, size, sugar } = this.state;
-        const { addCart, reduction, increase, removeProduct, getTotal, payment, set_products, set_syrups, set_size, set_sugar, randomBasketId } = this;
+        const { resetState, addCart, reduction, increase, removeProduct, getTotal, payment, set_products, set_syrups, set_size, set_sugar, randomBasketId } = this;
         return (
-            <DataContext.Provider value={{ products, addCart, cart, reduction, increase, removeProduct, total, getTotal, payment, set_products, set_syrups, syrup, set_size, size, set_sugar, randomBasketId, sugar }}>
+            <DataContext.Provider value={{ resetState, products, addCart, cart, reduction, increase, removeProduct, total, getTotal, payment, set_products, set_syrups, syrup, set_size, size, set_sugar, randomBasketId, sugar }}>
                 {this.props.children}
             </DataContext.Provider>
         )

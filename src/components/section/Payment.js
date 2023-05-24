@@ -3,10 +3,11 @@ import "../css/Cart.css"
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCheckbox, MDBCol, MDBInput, MDBListGroup, MDBListGroupItem, MDBRow, MDBTextArea, MDBTypography } from 'mdb-react-ui-kit';
 import { useContext, useState } from "react";
 import { DataContext } from "../Context";
+import { Link } from "react-router-dom";
 const Payment = () => {
 
     const handleSubmit = (data) => {
-        fetch('http://localhost:8000/json-test', {
+        fetch('http://localhost:8000/payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: {
@@ -15,7 +16,7 @@ const Payment = () => {
         });
     }
 
-    const { cart, total, payment, } = useContext(DataContext)
+    const { resetState, cart, total, payment, removeProductAll } = useContext(DataContext)
 
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
@@ -81,15 +82,24 @@ const Payment = () => {
                                 </MDBListGroupItem>
                             </MDBListGroup>
 
-                            <MDBBtn onClick={() => payment({ name: name, surname: surname, address_name: address, email: email, phone: phone, address_detail: address_detail })} size="lg" block>
-                                Make purchase
+                            <MDBBtn onClick={() => {
+                                console.log('qamwdmkqmkw')
+                                payment({ name: name, surname: surname, address_name: address, email: email, phone: phone, address_detail: address_detail });
+                                localStorage.clear();
+                                resetState()
+
+                            }} size="lg" block>
+                                <Link to="/paymentcompleted">
+                                    Make purchase
+                                </Link>
+
 
                             </MDBBtn>
                         </MDBCardBody>
                     </MDBCard>
                 </MDBCol>
             </MDBRow>
-        </div>
+        </div >
     )
 }
 

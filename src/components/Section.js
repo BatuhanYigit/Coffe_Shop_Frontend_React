@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import Products from './section/Products'
-import Details from './section/Details'
+import PaymentCompleted from './section/PaymentCompleted'
 import { Route } from "react-router-dom"
 import Cart from './section/Cart'
-// import { Payment } from './section/Payment'
 import NewProducts from './section/NewProducts'
 import Payment from './section/Payment'
 
@@ -14,9 +13,9 @@ export class Section extends Component {
             <section>
                 <Route path="/" component={NewProducts} exact />
                 <Route path="/product" component={NewProducts} exact />
-                <Route path="/product/:id" component={Details} exact />
                 <Route path="/cart" component={Cart} exact />
                 <Route path="/payment" component={Payment} exact />
+                <Route path="/paymentcompleted" component={PaymentCompleted} exact />
             </section>
         )
     }

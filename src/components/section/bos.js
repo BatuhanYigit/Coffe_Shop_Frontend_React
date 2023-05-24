@@ -10,7 +10,7 @@ export class Payment extends Component {
     }
 
     handleSubmit(data) {
-        fetch('http://localhost:8000/json-test', {
+        fetch('http://localhost:8000/payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: {
@@ -83,7 +83,6 @@ export class Payment extends Component {
 
                                 <MDBBtn onClick={() => payment()} size="lg" block>
                                     Make purchase
-                                    {console.log(cart)}
                                 </MDBBtn>
                             </MDBCardBody>
                         </MDBCard>
